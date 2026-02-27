@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useProfile } from "@/hooks/use-profile";
-import { useLinks } from "@/hooks/use-links";
 import { motion } from "framer-motion";
 import {
   ShieldCheck,
@@ -22,6 +20,40 @@ import {
 } from "lucide-react";
 import { PolicyModal } from "@/components/PolicyModal";
 import avatarImage from "@assets/favicon_(1)_1772226696138.png";
+
+const profile = {
+  name: "تأمين السيارات الخاص بك",
+  bio: "أفضل عروض تأمين السيارات في منطقتك. احصل على عرض سعر الآن!",
+  privacyPolicy: "سياسة الخصوصية الخاصة بنا (تتضمن قواعد NZCD): نحن نحمي بياناتك ونلتزم بجميع قواعد الخصوصية. يتم استخدام بياناتك فقط لغرض تقديم عروض التأمين المناسبة لك.",
+  cookiePolicy: "سياسة ملفات تعريف الارتباط: نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتقديم محتوى مخصص لك.",
+};
+
+const staticLinks = [
+  {
+    id: 1,
+    title: "احصل على عرض سعر",
+    url: "https://example.com/quote",
+    imageUrl: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80",
+    order: 1,
+    isActive: true,
+  },
+  {
+    id: 2,
+    title: "اتصل بنا",
+    url: "https://example.com/contact",
+    imageUrl: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
+    order: 2,
+    isActive: true,
+  },
+  {
+    id: 3,
+    title: "عروض مميزة",
+    url: "https://example.com/offers",
+    imageUrl: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80",
+    order: 3,
+    isActive: true,
+  },
+];
 
 const securityRules = [
   "نلتزم بحماية بياناتك الشخصية وفقاً لأعلى معايير الأمان الدولية",
@@ -45,35 +77,9 @@ const linkIcons = [FileText, Car, Sparkles];
 const securityIcons = [Shield, Lock, ShieldCheck, Award, Star, Heart, Zap, CheckCircle2];
 
 export default function PublicProfile() {
-  const { data: profile, isLoading: isLoadingProfile } = useProfile();
-  const { data: links, isLoading: isLoadingLinks } = useLinks();
   const [activeModal, setActiveModal] = useState<"privacy" | "cookie" | "security" | null>(null);
 
-  if (isLoadingProfile || isLoadingLinks) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center premium-gradient gap-5">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-        >
-          <div className="relative">
-            <div className="absolute inset-[-8px] bg-accent/20 rounded-full blur-xl animate-pulse" />
-            <Shield className="w-14 h-14 sm:w-18 sm:h-18 text-white relative z-10" />
-          </div>
-        </motion.div>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-white/40 text-sm font-medium tracking-wider"
-        >
-          جاري التحميل...
-        </motion.p>
-      </div>
-    );
-  }
-
-  const activeLinks = (links || [])
+  const activeLinks = staticLinks
     .filter((link) => link.isActive)
     .sort((a, b) => (a.order || 0) - (b.order || 0));
 
@@ -129,7 +135,7 @@ export default function PublicProfile() {
             <div className="absolute inset-[-5px] sm:inset-[-7px] rounded-full bg-gradient-to-b from-white/10 to-transparent" />
             <img
               src={avatarImage}
-              alt={profile?.name || "avatar"}
+              alt={profile.name}
               className="w-32 h-32 sm:w-44 sm:h-44 rounded-full object-contain bg-white/10 backdrop-blur-md border-[3px] border-white/20 shadow-2xl relative z-10 p-4 sm:p-5"
             />
             <motion.div
@@ -161,7 +167,7 @@ export default function PublicProfile() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-display mb-4 sm:mb-5 px-2 shimmer-text leading-tight animate-text-glow"
           >
-            {profile?.name || "أفضل تأمين لسيارتك"}
+            {profile.name}
           </motion.h1>
 
           <motion.p
@@ -170,7 +176,7 @@ export default function PublicProfile() {
             transition={{ delay: 0.4 }}
             className="text-base sm:text-lg md:text-xl text-white/60 max-w-xs sm:max-w-lg mx-auto leading-relaxed px-2"
           >
-            {profile?.bio || "وفّرنا عليك البحث بين أكثر من ٢٠ شركة تأمين في مكان واحد"}
+            {profile.bio}
           </motion.p>
 
           <motion.div
@@ -390,7 +396,7 @@ export default function PublicProfile() {
           </div>
 
           <p className="text-[11px] text-muted-foreground/30 font-medium tracking-wide">
-            جميع الحقوق محفوظة &copy; {new Date().getFullYear()} {profile?.name || "تأمين السيارات"}
+            جميع الحقوق محفوظة &copy; {new Date().getFullYear()} {profile.name}
           </p>
         </footer>
       </main>
@@ -399,14 +405,14 @@ export default function PublicProfile() {
         isOpen={activeModal === "privacy"}
         onClose={() => setActiveModal(null)}
         title="سياسة الخصوصية"
-        content={profile?.privacyPolicy}
+        content={profile.privacyPolicy}
       />
 
       <PolicyModal
         isOpen={activeModal === "cookie"}
         onClose={() => setActiveModal(null)}
         title="سياسة ملفات تعريف الارتباط"
-        content={profile?.cookiePolicy}
+        content={profile.cookiePolicy}
       />
 
       <PolicyModal
