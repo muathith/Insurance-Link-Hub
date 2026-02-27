@@ -2,7 +2,23 @@ import { useState } from "react";
 import { useProfile } from "@/hooks/use-profile";
 import { useLinks } from "@/hooks/use-links";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, Car, Shield, Link as LinkIcon, ExternalLink, Lock, FileText, Cookie, ChevronLeft, CheckCircle2, Sparkles, Star, Award, Zap, Users } from "lucide-react";
+import {
+  ShieldCheck,
+  Car,
+  Shield,
+  Link as LinkIcon,
+  ExternalLink,
+  Lock,
+  FileText,
+  Cookie,
+  ChevronLeft,
+  CheckCircle2,
+  Sparkles,
+  Star,
+  Award,
+  Zap,
+  Users,
+} from "lucide-react";
 import { PolicyModal } from "@/components/PolicyModal";
 import avatarImage from "@assets/favicon_(1)_1772226696138.png";
 
@@ -28,7 +44,9 @@ const linkIcons = [FileText, Car, Sparkles];
 export default function PublicProfile() {
   const { data: profile, isLoading: isLoadingProfile } = useProfile();
   const { data: links, isLoading: isLoadingLinks } = useLinks();
-  const [activeModal, setActiveModal] = useState<"privacy" | "cookie" | "security" | null>(null);
+  const [activeModal, setActiveModal] = useState<
+    "privacy" | "cookie" | "security" | null
+  >(null);
 
   if (isLoadingProfile || isLoadingLinks) {
     return (
@@ -53,40 +71,61 @@ export default function PublicProfile() {
   }
 
   const activeLinks = (links || [])
-    .filter(link => link.isActive)
+    .filter((link) => link.isActive)
     .sort((a, b) => (a.order || 0) - (b.order || 0));
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } }
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 40, scale: 0.95 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 200, damping: 20 } }
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { type: "spring", stiffness: 200, damping: 20 },
+    },
   };
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-b from-slate-50 via-blue-50/30 to-slate-50 dark:from-slate-950 dark:via-blue-950/20 dark:to-slate-950 font-sans" dir="rtl">
-
+    <div className="min-h-screen relative font-sans page-bg" dir="rtl">
       <div className="hero-gradient relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-[-40%] right-[-15%] w-[70vw] h-[70vw] rounded-full bg-blue-400/8 blur-3xl animate-float" />
           <div className="absolute bottom-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-accent/8 blur-3xl animate-float-delay" />
           <div className="absolute top-[20%] left-[50%] w-[30vw] h-[30vw] rounded-full bg-blue-300/5 blur-3xl animate-float-delay-2" />
-          <div className="absolute top-[60%] right-[60%] w-[20vw] h-[20vw] rounded-full bg-accent/5 blur-3xl animate-float" style={{ animationDelay: '3s' }} />
+          <div
+            className="absolute top-[60%] right-[60%] w-[20vw] h-[20vw] rounded-full bg-accent/5 blur-3xl animate-float"
+            style={{ animationDelay: "3s" }}
+          />
 
           <div className="hidden sm:block absolute top-12 left-12 w-2 h-2 rounded-full bg-accent/50 animate-pulse" />
-          <div className="hidden sm:block absolute top-24 right-[25%] w-1.5 h-1.5 rounded-full bg-white/30 animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="hidden sm:block absolute bottom-28 left-[35%] w-2 h-2 rounded-full bg-accent/30 animate-pulse" style={{ animationDelay: '0.5s' }} />
-          <div className="hidden md:block absolute top-[40%] right-12 w-1 h-1 rounded-full bg-white/20 animate-pulse" style={{ animationDelay: '1.5s' }} />
-          <div className="hidden md:block absolute bottom-[35%] right-[40%] w-1.5 h-1.5 rounded-full bg-blue-300/20 animate-pulse" style={{ animationDelay: '2s' }} />
+          <div
+            className="hidden sm:block absolute top-24 right-[25%] w-1.5 h-1.5 rounded-full bg-white/30 animate-pulse"
+            style={{ animationDelay: "1s" }}
+          />
+          <div
+            className="hidden sm:block absolute bottom-28 left-[35%] w-2 h-2 rounded-full bg-accent/30 animate-pulse"
+            style={{ animationDelay: "0.5s" }}
+          />
+          <div
+            className="hidden md:block absolute top-[40%] right-12 w-1 h-1 rounded-full bg-white/20 animate-pulse"
+            style={{ animationDelay: "1.5s" }}
+          />
+          <div
+            className="hidden md:block absolute bottom-[35%] right-[40%] w-1.5 h-1.5 rounded-full bg-blue-300/20 animate-pulse"
+            style={{ animationDelay: "2s" }}
+          />
 
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-32 sm:pb-40 flex flex-col items-center text-center">
-
           <motion.div
             initial={{ opacity: 0, scale: 0.7, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -117,63 +156,51 @@ export default function PublicProfile() {
             className="inline-flex items-center gap-2 mb-4 sm:mb-5 bg-white/8 backdrop-blur-sm rounded-full px-4 py-1.5 border border-white/10"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-[11px] sm:text-xs text-white/60 font-medium tracking-wide">متاح الآن</span>
+            <span className="text-[11px] sm:text-xs text-white/60 font-medium tracking-wide">
+              متاح الآن
+            </span>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-display text-white mb-3 sm:mb-5 drop-shadow-lg px-2 shimmer-text leading-tight"
-          >
-            {profile?.name || "أفضل تأمين لسيارتك"}
-          </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="text-base sm:text-lg md:text-xl text-white/70 max-w-xs sm:max-w-md mx-auto leading-relaxed px-2"
+            className="text-base sm:text-lg md:text-xl text-blue-800 max-w-xs sm:max-w-md mx-auto leading-relaxed px-2"
           >
-            {profile?.bio || "وفّرنا عليك البحث بين أكثر من ٢٠ شركة تأمين في مكان واحد"}
+            {profile?.bio ||
+              "وفّرنا عليك البحث بين أكثر من ٢٠ شركة تأمين في مكان واحد"}
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex items-center gap-3 sm:gap-4 mt-8 sm:mt-10"
-          >
-            {stats.map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.55 + i * 0.1, type: "spring" }}
-                className="relative flex flex-col items-center gap-1.5 sm:gap-2 bg-white/[0.07] backdrop-blur-md rounded-2xl px-4 sm:px-6 py-3 sm:py-4 border border-white/[0.08] min-w-[90px] sm:min-w-[110px]"
-              >
-                <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-accent mb-0.5" />
-                <span className="text-base sm:text-lg font-bold text-white">{stat.value}</span>
-                <span className="text-[10px] sm:text-xs text-white/40 font-medium">{stat.label}</span>
-              </motion.div>
-            ))}
-          </motion.div>
         </div>
 
         <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 100" className="w-full h-auto block" preserveAspectRatio="none">
+          <svg
+            viewBox="0 0 1440 100"
+            className="w-full h-auto block"
+            preserveAspectRatio="none"
+          >
             <defs>
               <linearGradient id="wave-fill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" className="[stop-color:theme(colors.slate.50)] dark:[stop-color:theme(colors.slate.950)]" stopOpacity="0.5" />
-                <stop offset="100%" className="[stop-color:theme(colors.slate.50)] dark:[stop-color:theme(colors.slate.950)]" stopOpacity="1" />
+                <stop
+                  offset="0%"
+                  className="[stop-color:theme(colors.slate.50)] dark:[stop-color:theme(colors.slate.950)]"
+                  stopOpacity="0.5"
+                />
+                <stop
+                  offset="100%"
+                  className="[stop-color:theme(colors.slate.50)] dark:[stop-color:theme(colors.slate.950)]"
+                  stopOpacity="1"
+                />
               </linearGradient>
             </defs>
-            <path d="M0,60 C240,90 480,20 720,50 C960,80 1200,30 1440,60 L1440,100 L0,100 Z" fill="url(#wave-fill)" />
+            <path
+              d="M0,60 C240,90 480,20 720,50 C960,80 1200,30 1440,60 L1440,100 L0,100 Z"
+              fill="url(#wave-fill)"
+            />
           </svg>
         </div>
       </div>
 
       <main className="relative z-10 max-w-2xl mx-auto px-3 sm:px-4 md:px-6 pb-12 sm:pb-16">
-
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -191,7 +218,7 @@ export default function PublicProfile() {
                 rel="noopener noreferrer"
                 data-testid={`link-card-${link.id}`}
                 className="group relative block rounded-2xl sm:rounded-3xl overflow-hidden link-card-shadow"
-                style={{ minHeight: 'clamp(150px, 30vw, 210px)' }}
+                style={{ minHeight: "clamp(150px, 30vw, 210px)" }}
               >
                 {link.imageUrl ? (
                   <img
@@ -214,7 +241,10 @@ export default function PublicProfile() {
                   </div>
                 </div>
 
-                <div className="relative z-10 flex items-end justify-between p-5 sm:p-7 h-full" style={{ minHeight: 'clamp(150px, 30vw, 210px)' }}>
+                <div
+                  className="relative z-10 flex items-end justify-between p-5 sm:p-7 h-full"
+                  style={{ minHeight: "clamp(150px, 30vw, 210px)" }}
+                >
                   <div className="flex items-center gap-3 sm:gap-4">
                     <div className="relative">
                       <div className="absolute inset-0 bg-accent/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -263,8 +293,12 @@ export default function PublicProfile() {
               </div>
             </div>
             <div>
-              <h3 className="text-lg sm:text-xl font-display text-foreground">قواعد الأمان والحماية</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">نلتزم بأعلى معايير الحماية</p>
+              <h3 className="text-lg sm:text-xl font-display text-foreground">
+                قواعد الأمان والحماية
+              </h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                نلتزم بأعلى معايير الحماية
+              </p>
             </div>
           </div>
 
@@ -280,7 +314,9 @@ export default function PublicProfile() {
                 <div className="mt-0.5 bg-accent/10 rounded-lg p-1 group-hover/rule:bg-accent/20 transition-colors">
                   <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent" />
                 </div>
-                <span className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{rule}</span>
+                <span className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  {rule}
+                </span>
               </motion.div>
             ))}
           </div>
@@ -289,8 +325,16 @@ export default function PublicProfile() {
         <footer className="w-full text-center mt-8 sm:mt-10">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
             {[
-              { id: "privacy" as const, icon: FileText, label: "سياسة الخصوصية" },
-              { id: "cookie" as const, icon: Cookie, label: "سياسة ملفات تعريف الارتباط" },
+              {
+                id: "privacy" as const,
+                icon: FileText,
+                label: "سياسة الخصوصية",
+              },
+              {
+                id: "cookie" as const,
+                icon: Cookie,
+                label: "سياسة ملفات تعريف الارتباط",
+              },
               { id: "security" as const, icon: Lock, label: "قواعد الأمان" },
             ].map((item) => (
               <button
@@ -316,7 +360,8 @@ export default function PublicProfile() {
           </div>
 
           <p className="text-[11px] text-muted-foreground/35 font-medium">
-            جميع الحقوق محفوظة &copy; {new Date().getFullYear()} {profile?.name || "تأمين السيارات"}
+            جميع الحقوق محفوظة &copy; {new Date().getFullYear()}{" "}
+            {profile?.name || "تأمين السيارات"}
           </p>
         </footer>
       </main>

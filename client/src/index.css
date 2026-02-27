@@ -123,6 +123,31 @@
   }
 }
 
+.page-bg {
+  background:
+    linear-gradient(180deg,
+      transparent 0%,
+      hsl(215, 60%, 95%) 15%,
+      hsl(220, 50%, 97%) 30%,
+      hsl(225, 40%, 96%) 50%,
+      hsl(215, 55%, 94%) 70%,
+      hsl(220, 45%, 97%) 85%,
+      hsl(215, 50%, 95%) 100%
+    );
+}
+.dark .page-bg {
+  background:
+    linear-gradient(180deg,
+      transparent 0%,
+      hsl(222, 47%, 8%) 15%,
+      hsl(225, 40%, 10%) 30%,
+      hsl(220, 50%, 9%) 50%,
+      hsl(215, 45%, 11%) 70%,
+      hsl(222, 47%, 8%) 85%,
+      hsl(225, 40%, 7%) 100%
+    );
+}
+
 .glass-panel {
   @apply bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-premium;
 }
