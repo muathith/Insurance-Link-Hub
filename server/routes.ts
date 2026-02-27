@@ -22,21 +22,21 @@ async function seedDatabase() {
       url: "https://example.com/quote",
       order: 1,
       isActive: true,
-      imageUrl: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800&h=400",
+      imageUrl: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80",
     });
     await storage.createLink({
       title: "اتصل بنا",
       url: "https://example.com/contact",
       order: 2,
       isActive: true,
-      imageUrl: "https://images.unsplash.com/photo-1562144574-88f5f4b0d092?auto=format&fit=crop&q=80&w=800&h=400",
+      imageUrl: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
     });
     await storage.createLink({
       title: "عروض مميزة",
       url: "https://example.com/offers",
       order: 3,
       isActive: true,
-      imageUrl: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&q=80&w=800&h=400",
+      imageUrl: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80",
     });
   }
 }
