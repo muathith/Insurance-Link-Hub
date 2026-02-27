@@ -100,7 +100,7 @@ export default function PublicProfile() {
             transition={{ delay: 0.15 }}
             className="text-4xl font-display text-white mb-4 drop-shadow-lg"
           >
-            {profile?.name || "تأمين السيارات الشامل"}
+            {profile?.name || "أفضل تأمين لسيارتك"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -108,7 +108,7 @@ export default function PublicProfile() {
             transition={{ delay: 0.25 }}
             className="text-lg text-white/80 max-w-md mx-auto leading-relaxed"
           >
-            {profile?.bio || "نوفر لك أفضل عروض تأمين السيارات بأسعار تنافسية وتغطية شاملة"}
+            {profile?.bio || "وفّرنا عليك البحث بين أكثر من ٢٠ شركة تأمين في مكان واحد"}
           </motion.p>
 
           <motion.div
