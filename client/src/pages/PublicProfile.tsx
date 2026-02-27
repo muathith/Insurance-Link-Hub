@@ -4,6 +4,7 @@ import { useLinks } from "@/hooks/use-links";
 import { motion } from "framer-motion";
 import { ShieldCheck, Car, Shield, Link as LinkIcon, ExternalLink, Lock, FileText, Cookie, ChevronLeft, CheckCircle2 } from "lucide-react";
 import { PolicyModal } from "@/components/PolicyModal";
+import avatarImage from "@assets/favicon_(1)_1772226696138.png";
 
 const securityRules = [
   "نلتزم بحماية بياناتك الشخصية وفقاً لأعلى معايير الأمان الدولية",
@@ -73,17 +74,11 @@ export default function PublicProfile() {
             className="relative mb-6 sm:mb-8"
           >
             <div className="absolute inset-[-8px] bg-accent/30 rounded-full blur-xl animate-pulse" />
-            {profile?.avatarUrl ? (
-              <img
-                src={profile.avatarUrl}
-                alt={profile.name}
-                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-white/30 shadow-2xl relative z-10"
-              />
-            ) : (
-              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border-4 border-white/20 shadow-2xl relative z-10">
-                <ShieldCheck className="w-10 h-10 sm:w-14 sm:h-14 text-white" />
-              </div>
-            )}
+            <img
+              src={avatarImage}
+              alt={profile?.name || "avatar"}
+              className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-contain bg-white/10 backdrop-blur-sm border-4 border-white/20 shadow-2xl relative z-10 p-2"
+            />
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
