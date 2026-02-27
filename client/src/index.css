@@ -9,17 +9,18 @@
     --font-display: 'Cairo', sans-serif;
     --font-sans: 'Tajawal', sans-serif;
 
-    /* A premium deep blue and gold theme fitting for Car Insurance */
     --background: 220 33% 98%;
     --foreground: 222 47% 11%;
     
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
+    --card-border: 214 32% 91%;
     
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
+    --popover-border: 214 32% 91%;
     
-    --primary: 215 90% 32%; /* Deep Trust Blue */
+    --primary: 215 90% 32%;
     --primary-foreground: 210 40% 98%;
     
     --secondary: 210 40% 96%;
@@ -28,7 +29,7 @@
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
     
-    --accent: 43 96% 56%; /* Premium Gold/Orange */
+    --accent: 43 96% 56%;
     --accent-foreground: 222 47% 11%;
     
     --destructive: 0 84% 60%;
@@ -38,9 +39,23 @@
     --input: 214 32% 91%;
     --ring: 215 90% 32%;
 
+    --sidebar: 220 33% 98%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-primary: 215 90% 32%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 43 96% 56%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-ring: 215 90% 32%;
+
+    --chart-1: 215 90% 32%;
+    --chart-2: 43 96% 56%;
+    --chart-3: 172 66% 50%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
     --radius: 1rem;
     
-    /* Custom shadow for floating elements */
     --shadow-premium: 0 10px 40px -10px rgba(11, 37, 89, 0.15), 0 4px 6px -4px rgba(11, 37, 89, 0.05);
   }
 
@@ -50,9 +65,11 @@
     
     --card: 222 47% 11%;
     --card-foreground: 210 40% 98%;
+    --card-border: 217 32% 17%;
     
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
+    --popover-border: 217 32% 17%;
     
     --primary: 215 90% 50%;
     --primary-foreground: 210 40% 98%;
@@ -70,8 +87,25 @@
     --destructive-foreground: 210 40% 98%;
     
     --border: 217 32% 17%;
-    --input: 217 32% 17%;
+    --input: 217 32% 20%;
     --ring: 215 90% 50%;
+
+    --sidebar: 222 47% 7%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-border: 217 32% 17%;
+    --sidebar-primary: 215 90% 50%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 43 90% 60%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-ring: 215 90% 50%;
+
+    --chart-1: 215 90% 50%;
+    --chart-2: 43 90% 60%;
+    --chart-3: 172 66% 50%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    --shadow-premium: 0 10px 40px -10px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -89,13 +123,12 @@
   }
 }
 
-/* Custom premium hover utilities */
 .glass-panel {
   @apply bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-premium;
 }
 
 .premium-gradient {
-  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(220, 80%, 20%) 100%);
+  background: linear-gradient(135deg, hsl(215, 90%, 25%) 0%, hsl(220, 80%, 15%) 50%, hsl(225, 70%, 10%) 100%);
 }
 
 .btn-hover-effect {

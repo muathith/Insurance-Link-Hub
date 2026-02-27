@@ -2,26 +2,40 @@ import { useState } from "react";
 import { useProfile } from "@/hooks/use-profile";
 import { useLinks } from "@/hooks/use-links";
 import { motion } from "framer-motion";
-import { ShieldCheck, Car, Shield, Link as LinkIcon, ExternalLink } from "lucide-react";
+import { ShieldCheck, Car, Shield, Link as LinkIcon, ExternalLink, Lock, FileText, Cookie, ChevronLeft, CheckCircle2 } from "lucide-react";
 import { PolicyModal } from "@/components/PolicyModal";
+
+const securityRules = [
+  "نلتزم بحماية بياناتك الشخصية وفقاً لأعلى معايير الأمان الدولية",
+  "جميع المعاملات مشفرة باستخدام بروتوكول SSL/TLS",
+  "لا نشارك بياناتك مع أي طرف ثالث دون موافقتك الصريحة",
+  "نطبق قواعد NZCD لحماية البيانات والخصوصية",
+  "يحق لك طلب حذف بياناتك في أي وقت",
+  "نحتفظ ببياناتك فقط للمدة اللازمة لتقديم الخدمة",
+  "نستخدم جدران حماية متقدمة لمنع الوصول غير المصرح به",
+  "يتم مراجعة سياسات الأمان بشكل دوري لضمان الامتثال",
+];
 
 export default function PublicProfile() {
   const { data: profile, isLoading: isLoadingProfile } = useProfile();
   const { data: links, isLoading: isLoadingLinks } = useLinks();
 
-  const [activeModal, setActiveModal] = useState<"privacy" | "cookie" | null>(null);
+  const [activeModal, setActiveModal] = useState<"privacy" | "cookie" | "security" | null>(null);
 
   if (isLoadingProfile || isLoadingLinks) {
     return (
       <div className="min-h-screen flex items-center justify-center premium-gradient">
-        <div className="animate-spin text-accent">
-          <Shield className="w-12 h-12" />
-        </div>
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          className="text-white"
+        >
+          <Shield className="w-16 h-16" />
+        </motion.div>
       </div>
     );
   }
 
-  // Active links sorted by order
   const activeLinks = (links || [])
     .filter(link => link.isActive)
     .sort((a, b) => (a.order || 0) - (b.order || 0));
@@ -30,61 +44,94 @@ export default function PublicProfile() {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 }
+      transition: { staggerChildren: 0.12 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 260, damping: 20 } }
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-slate-50 dark:bg-slate-950 font-sans" dir="rtl">
-      {/* Abstract Background Elements */}
-      <div className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] rounded-full bg-primary/10 blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-accent/10 blur-[80px] pointer-events-none" />
+    <div className="min-h-screen relative bg-slate-50 dark:bg-slate-950 font-sans" dir="rtl">
 
-      <main className="relative z-10 max-w-2xl mx-auto px-4 py-16 flex flex-col items-center">
-        
-        {/* Profile Header */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center text-center mb-12"
-        >
-          <div className="relative mb-6">
-            <div className="absolute inset-0 bg-accent rounded-full blur-md opacity-50 animate-pulse" />
+      <div className="premium-gradient relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-[-50%] right-[-20%] w-[80vw] h-[80vw] rounded-full bg-white/5 blur-3xl" />
+          <div className="absolute bottom-[-30%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-accent/10 blur-3xl" />
+          <div className="absolute top-10 left-10 w-3 h-3 rounded-full bg-accent/60 animate-pulse" />
+          <div className="absolute top-20 right-[20%] w-2 h-2 rounded-full bg-white/40 animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-16 left-[30%] w-2 h-2 rounded-full bg-accent/40 animate-pulse" style={{ animationDelay: '0.5s' }} />
+        </div>
+
+        <div className="relative z-10 max-w-2xl mx-auto px-4 pt-16 pb-24 flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            className="relative mb-8"
+          >
+            <div className="absolute inset-[-8px] bg-accent/30 rounded-full blur-xl animate-pulse" />
             {profile?.avatarUrl ? (
-              <img 
-                src={profile.avatarUrl} 
-                alt={profile.name} 
-                className="w-28 h-28 rounded-full object-cover border-4 border-background shadow-xl relative z-10"
+              <img
+                src={profile.avatarUrl}
+                alt={profile.name}
+                className="w-32 h-32 rounded-full object-cover border-4 border-white/30 shadow-2xl relative z-10"
               />
             ) : (
-              <div className="w-28 h-28 rounded-full bg-primary flex items-center justify-center border-4 border-background shadow-xl relative z-10 text-primary-foreground">
-                <ShieldCheck className="w-12 h-12" />
+              <div className="w-32 h-32 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border-4 border-white/20 shadow-2xl relative z-10">
+                <ShieldCheck className="w-14 h-14 text-white" />
               </div>
             )}
-            <div className="absolute -bottom-2 -right-2 bg-accent text-accent-foreground p-2 rounded-full shadow-lg z-20">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3, type: "spring" }}
+              className="absolute -bottom-2 -right-2 bg-accent text-accent-foreground p-2.5 rounded-full shadow-lg z-20"
+            >
               <Car className="w-5 h-5" />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <h1 className="text-3xl font-display text-primary dark:text-primary-foreground mb-3">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="text-4xl font-display text-white mb-4 drop-shadow-lg"
+          >
             {profile?.name || "تأمين السيارات الشامل"}
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
-            {profile?.bio || "نوفر لك أفضل عروض تأمين السيارات بأسعار تنافسية وتغطية شاملة تضمن راحة بالك على الطريق."}
-          </p>
-        </motion.div>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="text-lg text-white/80 max-w-md mx-auto leading-relaxed"
+          >
+            {profile?.bio || "نوفر لك أفضل عروض تأمين السيارات بأسعار تنافسية وتغطية شاملة"}
+          </motion.p>
 
-        {/* Links List */}
-        <motion.div 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="flex items-center gap-2 mt-6 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 border border-white/10"
+          >
+            <Lock className="w-4 h-4 text-accent" />
+            <span className="text-sm text-white/70">محمي وآمن بالكامل</span>
+          </motion.div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-slate-50 dark:from-slate-950 to-transparent" />
+      </div>
+
+      <main className="relative z-10 max-w-2xl mx-auto px-4 -mt-8 pb-16">
+
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="w-full flex flex-col gap-4 mb-16"
+          className="flex flex-col gap-5 mb-12"
         >
           {activeLinks.map((link) => (
             <motion.a
@@ -94,80 +141,131 @@ export default function PublicProfile() {
               target="_blank"
               rel="noopener noreferrer"
               data-testid={`link-card-${link.id}`}
-              className="group relative block rounded-2xl btn-hover-effect overflow-hidden"
-              style={{ minHeight: '160px' }}
+              className="group relative block rounded-2xl overflow-hidden shadow-premium"
+              style={{ minHeight: '180px' }}
             >
               {link.imageUrl ? (
-                <img 
-                  src={link.imageUrl} 
-                  alt={link.title} 
-                  className="absolute inset-0 w-full h-full object-cover"
+                <img
+                  src={link.imageUrl}
+                  alt={link.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               ) : (
-                <div className="absolute inset-0 bg-primary/10" />
+                <div className="absolute inset-0 premium-gradient" />
               )}
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 group-hover:from-black/90 transition-colors duration-300" />
 
-              <div className="relative z-10 flex items-end justify-between p-5 h-full" style={{ minHeight: '160px' }}>
-                <div className="flex items-center gap-3">
-                  <div className="bg-accent text-accent-foreground p-2 rounded-full shadow-lg">
+              <div className="absolute top-4 left-4 bg-white/10 backdrop-blur-md rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
+                <ExternalLink className="w-4 h-4 text-white" />
+              </div>
+
+              <div className="relative z-10 flex items-end p-6 h-full" style={{ minHeight: '180px' }}>
+                <div className="flex items-center gap-4">
+                  <div className="bg-accent text-accent-foreground p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <LinkIcon className="w-5 h-5" />
                   </div>
-                  <h2 className="text-xl font-bold text-white drop-shadow-md">
-                    {link.title}
-                  </h2>
-                </div>
-                <div className="text-white/70 group-hover:text-white transition-colors">
-                  <ExternalLink className="w-5 h-5" />
+                  <div>
+                    <h2 className="text-2xl font-bold text-white drop-shadow-lg mb-1">
+                      {link.title}
+                    </h2>
+                    <div className="flex items-center gap-1 text-white/50 text-sm">
+                      <span>اضغط للمزيد</span>
+                      <ChevronLeft className="w-3 h-3" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.a>
           ))}
-          
+
           {activeLinks.length === 0 && (
-            <div className="text-center p-8 border-2 border-dashed rounded-2xl border-muted-foreground/30 text-muted-foreground">
+            <div className="text-center p-10 border-2 border-dashed rounded-2xl border-muted-foreground/20 text-muted-foreground">
               لا توجد روابط نشطة حالياً.
             </div>
           )}
         </motion.div>
 
-        {/* Footer */}
-        <footer className="w-full text-center mt-auto">
-          <div className="flex items-center justify-center gap-6 mb-4">
-            <button 
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-premium mb-8 border border-border/50"
+        >
+          <div className="flex items-center gap-3 mb-5">
+            <div className="bg-primary/10 text-primary p-2.5 rounded-xl">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <h3 className="text-xl font-display text-foreground">قواعد الأمان والحماية</h3>
+          </div>
+          <div className="space-y-3">
+            {securityRules.map((rule, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 + idx * 0.05 }}
+                className="flex items-start gap-3"
+              >
+                <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span className="text-muted-foreground leading-relaxed">{rule}</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <footer className="w-full text-center mt-8">
+          <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
+            <button
+              data-testid="button-privacy-policy"
               onClick={() => setActiveModal("privacy")}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hover:underline underline-offset-4"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-slate-900 shadow-md border border-border/50 text-sm font-medium text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-200"
             >
+              <FileText className="w-4 h-4" />
               سياسة الخصوصية
             </button>
-            <div className="w-1 h-1 rounded-full bg-border" />
-            <button 
+            <button
+              data-testid="button-cookie-policy"
               onClick={() => setActiveModal("cookie")}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hover:underline underline-offset-4"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-slate-900 shadow-md border border-border/50 text-sm font-medium text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-200"
             >
+              <Cookie className="w-4 h-4" />
               سياسة ملفات تعريف الارتباط
             </button>
+            <button
+              data-testid="button-security-rules"
+              onClick={() => setActiveModal("security")}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-slate-900 shadow-md border border-border/50 text-sm font-medium text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-200"
+            >
+              <Lock className="w-4 h-4" />
+              قواعد الأمان
+            </button>
           </div>
-          <p className="text-xs text-muted-foreground/60">
+          <p className="text-xs text-muted-foreground/50">
             جميع الحقوق محفوظة &copy; {new Date().getFullYear()} {profile?.name || "تأمين السيارات"}
           </p>
         </footer>
-
       </main>
 
-      <PolicyModal 
-        isOpen={activeModal === "privacy"} 
-        onClose={() => setActiveModal(null)} 
-        title="سياسة الخصوصية (Privacy Policy)" 
-        content={profile?.privacyPolicy} 
+      <PolicyModal
+        isOpen={activeModal === "privacy"}
+        onClose={() => setActiveModal(null)}
+        title="سياسة الخصوصية"
+        content={profile?.privacyPolicy}
       />
-      
-      <PolicyModal 
-        isOpen={activeModal === "cookie"} 
-        onClose={() => setActiveModal(null)} 
-        title="سياسة ملفات تعريف الارتباط (Cookie Policy)" 
-        content={profile?.cookiePolicy} 
+
+      <PolicyModal
+        isOpen={activeModal === "cookie"}
+        onClose={() => setActiveModal(null)}
+        title="سياسة ملفات تعريف الارتباط"
+        content={profile?.cookiePolicy}
+      />
+
+      <PolicyModal
+        isOpen={activeModal === "security"}
+        onClose={() => setActiveModal(null)}
+        title="قواعد الأمان والحماية"
+        content={securityRules.map((r, i) => `${i + 1}. ${r}`).join("\n\n")}
       />
     </div>
   );
