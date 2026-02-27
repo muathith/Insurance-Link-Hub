@@ -13,8 +13,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={PublicProfile} />
-      <Route path="/admin" component={AdminDashboard} />
-      <Route path="/admin/settings" component={AdminSettings} />
+      <Route path="/adminqaq" component={AdminDashboard} />
+      <Route path="/adminqaq/settings" component={AdminSettings} />
       <Route component={NotFound} />
     </Switch>
   );
