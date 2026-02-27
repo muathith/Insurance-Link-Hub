@@ -93,29 +93,34 @@ export default function PublicProfile() {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center p-4 rounded-2xl glass-panel btn-hover-effect overflow-hidden bg-white/80 hover:bg-white dark:bg-slate-900/80 dark:hover:bg-slate-900"
+              data-testid={`link-card-${link.id}`}
+              className="group relative block rounded-2xl btn-hover-effect overflow-hidden"
+              style={{ minHeight: '160px' }}
             >
-              {/* Highlight strip on hover */}
-              <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-accent scale-y-0 group-hover:scale-y-100 transition-transform origin-center rounded-r-2xl" />
-              
-              <div className="flex-shrink-0 ml-4">
-                {link.imageUrl ? (
-                  <img src={link.imageUrl} alt={link.title} className="w-14 h-14 rounded-xl object-cover shadow-sm" />
-                ) : (
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                    <LinkIcon className="w-6 h-6" />
-                  </div>
-                )}
-              </div>
-              
-              <div className="flex-grow">
-                <h2 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                  {link.title}
-                </h2>
-              </div>
+              {link.imageUrl ? (
+                <img 
+                  src={link.imageUrl} 
+                  alt={link.title} 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-primary/10" />
+              )}
 
-              <div className="flex-shrink-0 text-muted-foreground group-hover:text-accent transition-colors opacity-50 group-hover:opacity-100 mr-2">
-                <ExternalLink className="w-5 h-5" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+              <div className="relative z-10 flex items-end justify-between p-5 h-full" style={{ minHeight: '160px' }}>
+                <div className="flex items-center gap-3">
+                  <div className="bg-accent text-accent-foreground p-2 rounded-full shadow-lg">
+                    <LinkIcon className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-xl font-bold text-white drop-shadow-md">
+                    {link.title}
+                  </h2>
+                </div>
+                <div className="text-white/70 group-hover:text-white transition-colors">
+                  <ExternalLink className="w-5 h-5" />
+                </div>
               </div>
             </motion.a>
           ))}
